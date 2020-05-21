@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 package com.azure.management.compute.samples;
 
 import com.azure.core.credential.TokenCredential;
@@ -10,10 +13,15 @@ import com.azure.management.compute.VirtualMachine;
 import com.azure.management.network.Network;
 import com.azure.management.resources.ResourceGroup;
 import com.azure.management.resources.fluentcore.arm.Region;
+import com.azure.management.resources.fluentcore.model.Indexable;
 import com.azure.management.resources.fluentcore.profile.AzureProfile;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.util.UUID;
+
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 
 public class ManageVirtualMachine {
