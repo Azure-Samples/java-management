@@ -97,9 +97,6 @@ public class Demo {
             Thread.sleep(Duration.ofSeconds(3).toMillis());
             syncPoller.poll();
         } catch (Throwable e) {
-            logger.error(e.getStackTrace().toString());
-            logger.error(e.getMessage());
-            logger.error(e.toString());
             logger.logThrowableAsError(e);
         } finally {
             // clean up
