@@ -22,6 +22,7 @@ public class ResourceManager {
     }
     public static void main(String[] args) throws Exception {
         // authentication
+        // split azure specific parameter from credential, which makes credential a simple interface
         TokenCredential credential = new ClientSecretCredentialBuilder()
                 .clientId("<ClientId>")
                 .clientSecret("<ClientSecret>")
@@ -38,7 +39,8 @@ public class ResourceManager {
 
 
 
-        // custom policy
+        // customize policy
+        // adoption of azure-core
         Azure.configure()
             .withPolicy(new Continue504PollingPolicy())
             .authenticate(credential, profile)
@@ -54,6 +56,7 @@ public class ResourceManager {
 
 
         // custom http client
+        // adoption of azure-core, could help users use different implementation of http client if they want
         HttpClient client = new OkHttpAsyncHttpClientBuilder()
                 .proxy(new ProxyOptions(ProxyOptions.Type.HTTP, new InetSocketAddress("127.0.0.1", 8888)))
                 .build();
@@ -75,6 +78,7 @@ public class ResourceManager {
 
 
         // error handling
+        // most is just naming changed, no special change in API
         final String resourceGroupName = randomString("rg", 8);
         try {
             azure.resourceGroups().getByName(resourceGroupName);
