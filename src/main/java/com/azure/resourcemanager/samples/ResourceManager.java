@@ -12,6 +12,7 @@ import com.azure.core.management.exception.ManagementException;
 import com.azure.identity.ClientSecretCredentialBuilder;
 import com.azure.resourcemanager.Azure;
 import com.azure.resourcemanager.resources.fluentcore.profile.AzureProfile;
+import com.azure.resourcemanager.resources.models.ResourceGroup;
 
 import java.net.InetSocketAddress;
 import java.util.UUID;
@@ -103,6 +104,15 @@ public class ResourceManager {
         //     System.err.printf("Response code: %s%n", e.body().code());
         //     System.err.printf("Response message: %s%n", e.body().message());
         // }
+
+
+
+
+        // Listing
+        // list return PagedIterable rather than PagedList in order for lazy loading.
+        for (ResourceGroup resourceGroup : azure.resourceGroups().list()) {
+            System.out.println(resourceGroup.id());
+        }
 
 
 
