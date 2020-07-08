@@ -11,6 +11,7 @@ import com.azure.core.management.AzureEnvironment;
 import com.azure.core.management.exception.ManagementException;
 import com.azure.identity.ClientSecretCredentialBuilder;
 import com.azure.resourcemanager.Azure;
+import com.azure.resourcemanager.resources.fluentcore.arm.Region;
 import com.azure.resourcemanager.resources.fluentcore.profile.AzureProfile;
 import com.azure.resourcemanager.resources.models.ResourceGroup;
 
@@ -80,26 +81,22 @@ public class ResourceManager {
 
         // error handling
         // most is just naming changed, no special change in API
-        final String resourceGroupName = randomString("rg", 8);
+        final String resourceGroupName = "resource group not valid";
         try {
-            azure.resourceGroups().getByName(resourceGroupName);
+            azure.resourceGroups().define(resourceGroupName)
+                    .withRegion(Region.US_WEST2)
+                    .create();
         } catch (ManagementException e) {
-            assert e.getResponse().getStatusCode() == 404;
             System.err.printf("Response code: %s%n", e.getValue().getCode());
             System.err.printf("Response message: %s%n", e.getValue().getMessage());
         }
 
         // previous
-        // final String resourceGroupName = random(8);
-        // final String networkName = random(8);
+        // final String resourceGroupName = "resource group not valid";
         // try {
-        //     ResourceGroup resourceGroup = azure.resourceGroups().getByName(resourceGroupName);
-        //     assert  resourceGroup == null;
-        //     Network network = azure.networks().define(networkName)
-        //             .withRegion(Region.US_WEST2)
-        //             .withExistingResourceGroup(resourceGroupName)
-        //             .withAddressSpace("")
-        //             .create();
+        //     azure.resourceGroups().define(resourceGroupName)
+        //         .withRegion(Region.US_WEST2)
+        //         .create();
         // } catch (CloudException e) {
         //     System.err.printf("Response code: %s%n", e.body().code());
         //     System.err.printf("Response message: %s%n", e.body().message());
